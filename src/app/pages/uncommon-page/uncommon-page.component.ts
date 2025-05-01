@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
 import {
+  AsyncPipe,
   I18nPluralPipe,
   I18nSelectPipe,
   JsonPipe,
@@ -35,6 +36,7 @@ const client2 = {
     UpperCasePipe,
     KeyValuePipe,
     TitleCasePipe,
+    AsyncPipe,
   ],
   templateUrl: './uncommon-page.component.html',
 })
@@ -86,4 +88,13 @@ export default class UncommonPageComponent {
     age: 27,
     address: 'Bogota, Colombia',
   };
+
+  // Asycn Pipe
+
+  promiseValue: Promise<string> = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('Promesa resuelta');
+      console.log('Promesa finalizada');
+    }, 3500);
+  });
 }
