@@ -5,8 +5,77 @@
 
 <div class="stats shadow">
   <div class="stat">
-    <div class="stat-title">Total Page Views</div>
-    <div class="stat-value">89,400</div>
-    <div class="stat-desc">21% more than last month</div>
+    <div class="stat-title">ToggleCase Pipe</div>
+    <div class="stat-value">{{ name() | toggleCase : upperCase() }}</div>
+    <div class="stat-desc">{{ name() }}</div>
+    <button
+      class="btn btn-primary mt-2"
+      (click)="upperCase.set(!this.upperCase())"
+    >
+      Toggle Case
+    </button>
   </div>
 </div>
+
+<div class="divider my-2"></div>
+
+<section class="my-2">
+  <h1 class="text-2xl font-bold my-2">Pipes personalizados en acción</h1>
+  <div class="flex gap-2 justify-end w-full">
+    <button class="btn btn-primary">Por nombre</button>
+    <button class="btn btn-accent">Por volar</button>
+    <button class="btn btn-secondary">Por color</button>
+    <button class="btn btn-info">Por creador</button>
+  </div>
+</section>
+
+<section class="overflow-x-auto w-full">
+  <table class="table table-xs w-full">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nombre</th>
+        <th>Puede volar</th>
+        <th>Color</th>
+        <th>Creador</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (hero of heroes(); track hero.id; let i = $index) {
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ hero.name }}</td>
+        <td>
+          <span
+            class="text-xs w-44"
+            [class.text-success]="hero.canFly"
+            [class.text-accent]="!hero.canFly"
+          >
+            {{ hero.canFly | canFly }}
+          </span>
+        </td>
+        <td>
+          <!-- This would be better instead of using a custom pipe -->
+          <!-- <span class="text-xs w-44" [style.color]="colorMap[hero.color]">
+            {{ hero.color | heroColor }}
+          </span> -->
+          <span class="text-xs w-44" [style.color]="hero.color | heroTextColor">
+            {{ hero.color | heroColor | titlecase }}
+          </span>
+        </td>
+        <td>
+          <span
+            class="text-xs w-44"
+            [class.text-blue-400]="hero.creator === 0"
+            [class.text-error]="hero.creator === 1"
+          >
+            {{ hero.creator | heroCreator }}
+          </span>
+        </td>
+      </tr>
+
+      }
+    </tbody>
+  </table>
+</section>
